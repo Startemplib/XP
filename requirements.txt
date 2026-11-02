@@ -1,0 +1,23 @@
+# What XP needs, and what it merely likes.
+#
+# **This file is the required list, and only that.** `pip install -r
+# requirements.txt` installs what XP needs to start, convert, merge, arrange and
+# save -- nothing else. The optional packages (GPU, the GL surface, the
+# selection-aware menu) live in `requirements-optional.txt`, because pip has no
+# extras here and everything below the old "optional" marker was installed by
+# the same command (found 2026-10-26).
+#
+# Measured on 2026-10-22 by making each package fail to import and driving a
+# real conversion: see `tests/test_without_the_extras.py`.
+
+# ---- REQUIRED ------------------------------------------------------------
+# **Bounds, not bare names.** A bare name means "whatever pip found", and the
+# code imports `pymupdf` by that name, which only exists from 1.24.3 on -- on an
+# older wheel the import fails and the package looks installed. These are the
+# oldest versions the tree is known to run on; a newer one is fine.
+opencv-python>=4.8
+numpy>=1.24
+pymupdf>=1.24.3
+pillow>=10.0
+
+# Optional, and never required: see requirements-optional.txt

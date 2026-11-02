@@ -1,0 +1,57 @@
+# What XP likes but does not need.
+#
+# Nothing here is required: XP starts, converts, merges, arranges and saves
+# without any of it. Each line says what it buys and what happens when it is
+# absent. Install it with pip install -r requirements-optional.txt, or the GPU
+# part with install.cmd -WithGpu.
+#
+# Measured on 2026-10-22 by making each package fail to import and driving a
+# real conversion: see `tests/test_without_the_extras.py`.
+# `install.ps1` splits this file on the line above: everything after it is
+# installed only with `-WithGpu`, and never required. The installer matches
+# that **line** (`# ==== Optional from here down ...`), not the word
+# "optional", because this paragraph and the one at the top both use the word
+# in prose and matching it made every package optional (found 2026-10-23).
+
+# ---- The card ------------------------------------------------------------
+# GPU acceleration for the batched colour work and the on-card painter.
+# `xp/gpu/backend.py` asks the device once and hands back cupy or numpy, so
+# a machine without a card, without a driver, or with a cupy that will not
+# load runs the same code on the processor. Nothing is refused.
+# Pick the cupy-cudaXXx matching your CUDA driver (`nvidia-smi`).
+cupy-cuda12x
+nvidia-cuda-runtime-cu12
+
+# ---- The fast rasteriser -------------------------------------------------
+# `xp/render/raster.py` has the same fill written twice: once for numba and
+# once in plain numpy. Without numba the numpy one runs -- slower, and the
+# drawing is the same.
+numba
+
+# ---- The page on the card ------------------------------------------------
+# The document surface in the merge window. `tkgl` is the default (a Tk frame
+# that owns the GL context, so the picture is inside the window); `glsurface`
+# is the Qt fallback. With neither installed the page is drawn through
+# ImageTk, which is how it was drawn before either existed.
+pyopengltk
+PyOpenGL
+PySide6
+
+# ---- The selection-aware Explorer menu ------------------------------------
+# `xp/shell/` -- the handler that builds the XP submenu from the whole
+# selection, so a pdf and a notebook together offer only Merger. It is
+# registered only when `windows.DYNAMIC_MENU` is True; the static menu the
+# installer writes needs none of this.
+pywin32
+
+# ---- The interactive viewer ----------------------------------------------
+# `vp()`, used by `xp tune` and `convert --interactive` only. Every
+# non-interactive command works without it.
+# arpy                      # the viewer library `vp()` lives in
+
+# ---- Known, and not yet explained ---------------------------------------
+# With **both** numba and cupy absent, the same PDF at the same settings
+# traced to 13,873 strokes where a full install gives 13,600 -- a 2%
+# difference in the document, not just in the speed. Either package present
+# on its own gives the full-install answer. Measured, isolated, and recorded
+# here rather than left for someone to discover on a new machine.

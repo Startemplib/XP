@@ -1,0 +1,26 @@
+{
+  "mode": "elec",
+  "dpi": 700,
+  "scale": null,
+  "dx": null,
+  "dy": null,
+  "min_area": 7,
+  "line_width": 0.07,
+  "max_coord_str_len": 30000,
+  "adaptive_block_size": 11,
+  "adaptive_c": 10,
+  "page_width": 187.8236,
+  "page_height": 391.3654,
+  "palette_bgr": {
+    "xopp_red": [0, 0, 255],
+    "xopp_blue_violet": [204, 51, 51],
+    "xopp_magenta": [255, 0, 255],
+    "xopp_orange": [0, 128, 255],
+    "xopp_yellow": [0, 255, 255],
+    "xopp_cyan": [255, 192, 0],
+    "xopp_green": [0, 255, 0],
+    "xopp_dark_green": [0, 128, 0],
+    "xopp_black": [0, 0, 0]
+  },
+  "hsv_ranges": {}
+}
